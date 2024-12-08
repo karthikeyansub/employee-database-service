@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -12,7 +13,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 @Data
 @EqualsAndHashCode
-public class Role {
+public final class Role implements Serializable {
 
     @Id
     private Integer id;

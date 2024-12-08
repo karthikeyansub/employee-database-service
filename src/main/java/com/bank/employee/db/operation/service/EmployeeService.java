@@ -2,6 +2,7 @@ package com.bank.employee.db.operation.service;
 
 import com.bank.employee.db.operation.api.dto.EmployeeDto;
 import com.bank.employee.db.operation.domain.Employee;
+import com.bank.employee.db.operation.mapper.EmployeeMapper;
 import com.bank.employee.db.operation.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,19 +15,20 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
 
-    public EmployeeDto getEmployeeById(final int employeeId) {
-        Employee employee = employeeRepository.getReferenceById(employeeId);
+    private EmployeeMapper employeeMapper;
 
-        //TODO: implement MapStruct for mapping
-        return new EmployeeDto(employee.getId(),
-                employee.getFirstName() + " " + employee.getSurName(),
-                employee.getRoleId()
-                );
+    public EmployeeDto getEmployeeById(final int employeeId) {
+
+        Employee employee = employeeRepository.getReferenceById(employeeId);
+        return employeeMapper.mapEmployeeToEmployeeDto(employee);
     }
 
-    //TODO: yet to implement
     public EmployeeDto createEmployee(final EmployeeDto employeeDto) {
-        return null;
+        Employee employee = employeeMapper.mapEmployeeDtoToEmployee(employeeDto);
+
+        employeeRepository.saveAndFlush(employee);
+
+        return employeeMapper.mapEmployeeToEmployeeDto(employee);
     }
 
     //TODO: yet to implement

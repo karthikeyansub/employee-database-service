@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "EMPLOYEE")
 @Builder(toBuilder = true)
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public final class Employee {
+public final class Employee implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +25,7 @@ public final class Employee {
     @Column(name = "SURNAME", nullable = false)
     private String surName;
 
-    @Column(name = "ROLE_ID")
+    @ManyToOne
+    @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID", nullable = false)
     private Integer roleId;
 }

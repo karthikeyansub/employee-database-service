@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Builder(toBuilder = true)
 @Embeddable
 @EqualsAndHashCode
-public class ProjectId implements Serializable {
+public final class ProjectId implements Serializable {
 
     @Column(name = "ID", nullable = false)
     private Integer id;

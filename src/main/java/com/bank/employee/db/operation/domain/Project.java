@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "PROJECT")
 @Builder(toBuilder = true)
 @Data
 @EqualsAndHashCode
-public class Project {
+public final class Project implements Serializable {
 
     @EmbeddedId
     private ProjectId projectId;
