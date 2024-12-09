@@ -7,15 +7,14 @@ import lombok.*;
 import java.io.Serializable;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder(toBuilder = true)
 @Embeddable
 @EqualsAndHashCode
+@ToString
 public final class ProjectId implements Serializable {
 
     @Column(name = "ID", nullable = false)
-    private Integer id;
+    private String id;
 
     @Column(name = "EMPLOYEE_ID", nullable = false)
     private Integer employeeId;

@@ -1,17 +1,19 @@
 package com.bank.employee.db.operation.domain;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
 @Entity
 @Table(name = "EMPLOYEE")
-@Builder(toBuilder = true)
-@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
+@Data
+@NoArgsConstructor
 public final class Employee implements Serializable {
 
     @Id
@@ -19,13 +21,12 @@ public final class Employee implements Serializable {
     @EqualsAndHashCode.Include
     private Integer id;
 
-    @Column(name = "FIRST_NAME", nullable = false)
-    private String firstName;
+    @Column(name = "FIRSTNAME", nullable = false)
+    private String firstname;
 
     @Column(name = "SURNAME", nullable = false)
-    private String surName;
+    private String surname;
 
-    @ManyToOne
     @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID", nullable = false)
     private Integer roleId;
 }

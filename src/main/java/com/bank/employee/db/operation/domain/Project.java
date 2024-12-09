@@ -1,17 +1,19 @@
 package com.bank.employee.db.operation.domain;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
 @Entity
 @Table(name = "PROJECT")
-@Builder(toBuilder = true)
 @Data
 @EqualsAndHashCode
+@ToString
+@NoArgsConstructor
 public final class Project implements Serializable {
 
     @EmbeddedId

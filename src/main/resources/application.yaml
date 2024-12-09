@@ -1,4 +1,4 @@
-
+server.port: 8081
 
 spring:
   datasource:
@@ -17,4 +17,15 @@ spring:
     hibernate:
       ddl-auto: none
 
+  # In-Memory cache
+  cache:
+    type: caffeine
+    cache-names: roleCacheManager
+    caffeine:
+      spec: maximumSize=100,expireAfterWrite=1h,recordStats
+
   h2.console.enabled: true
+
+  mvc.favicon.enabled: false
+
+logging.level.root: info

@@ -1,18 +1,17 @@
 package com.bank.employee.db.operation.domain;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "ROLE")
-@Builder(toBuilder = true)
 @Data
 @EqualsAndHashCode
+@ToString
+@NoArgsConstructor
 public final class Role implements Serializable {
 
     @Id

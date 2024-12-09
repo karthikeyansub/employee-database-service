@@ -1,17 +1,31 @@
 package com.bank.employee.db.operation.mapper;
 
-import com.bank.employee.db.operation.api.dto.EmployeeDto;
 import com.bank.employee.db.operation.domain.Employee;
+import com.bank.employee.db.operation.domain.dto.EmployeeRequest;
+import com.bank.employee.db.operation.domain.dto.EmployeeResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
 public interface EmployeeMapper {
 
-    @Mapping(target = "name", expression = "java(employee.getFirstname() + \" \" + employee.getSurname)")
-    EmployeeDto mapEmployeeToEmployeeDto(final Employee employee);
+    @Mapping(target = "name", expression = """
+            java(employee.getFirstname() + " " + employee.getSurname())
+        """)
+    EmployeeResponse mapEmployeeToEmployeeResponse(final Employee employee);
 
-    @Mapping(target = "firstName", expression = "java(employeeDto.getName() != null ? employeeDto.getName().split(\" \")[0] : null")
-    @Mapping(target = "surName", expression = "java(employeeDto.getName() != null && employeeDto.getName().split(\" \").length > 1 ? employeeDto.getName().split(\" \")[1] : null")
-    Employee mapEmployeeDtoToEmployee(final EmployeeDto employeeDto);
+    @Mapping(source = "name", target = "firstname", qualifiedByName = "getFirstName")
+    @Mapping(source = "name", target = "surname", qualifiedByName = "getSurName")
+    Employee mapEmployeeRequestToEmployee(final EmployeeRequest employeeRequest);
+
+    @Named("getFirstName")
+    default String extractFirstName(String name) {
+        return name != null ? name.split(" ")[0] : null;
+    }
+
+    @Named("getSurName")
+    default String extractSurName(String name) {
+        return name != null && name.split(" ").length > 0 ? name.split(" ")[1] : null;
+    }
 }

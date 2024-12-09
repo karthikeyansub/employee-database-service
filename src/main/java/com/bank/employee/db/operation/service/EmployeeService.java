@@ -1,12 +1,17 @@
 package com.bank.employee.db.operation.service;
 
-import com.bank.employee.db.operation.api.dto.EmployeeDto;
 import com.bank.employee.db.operation.domain.Employee;
+import com.bank.employee.db.operation.domain.dto.EmployeeRequest;
+import com.bank.employee.db.operation.domain.dto.EmployeeResponse;
+import com.bank.employee.db.operation.exception.EmployeeNotFoundException;
 import com.bank.employee.db.operation.mapper.EmployeeMapper;
 import com.bank.employee.db.operation.repository.EmployeeRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -17,27 +22,51 @@ public class EmployeeService {
 
     private EmployeeMapper employeeMapper;
 
-    public EmployeeDto getEmployeeById(final int employeeId) {
+    public EmployeeResponse getEmployeeById(final int employeeId) {
+        Employee employee = findEmployeeById(employeeId);
+        log.info("Retrieved employee details - {}", employee);
 
-        Employee employee = employeeRepository.getReferenceById(employeeId);
-        return employeeMapper.mapEmployeeToEmployeeDto(employee);
+        return employeeMapper.mapEmployeeToEmployeeResponse(employee);
     }
 
-    public EmployeeDto createEmployee(final EmployeeDto employeeDto) {
-        Employee employee = employeeMapper.mapEmployeeDtoToEmployee(employeeDto);
+    @Transactional
+    public EmployeeResponse createEmployee(final EmployeeRequest employeeRequest) {
+        Employee employee = employeeMapper.mapEmployeeRequestToEmployee(employeeRequest);
+        log.info("Employee details to be saved - {}", employee);
 
-        employeeRepository.saveAndFlush(employee);
+        Employee savedEmployee = employeeRepository.saveAndFlush(employee);
+        log.info("Saved employee details - {}", savedEmployee);
 
-        return employeeMapper.mapEmployeeToEmployeeDto(employee);
+        return employeeMapper.mapEmployeeToEmployeeResponse(savedEmployee);
     }
 
-    //TODO: yet to implement
-    public EmployeeDto updateEmployee(final EmployeeDto employeeDto) {
-        return null;
+    @Transactional
+    public EmployeeResponse updateEmployee(final int employeeId, final EmployeeRequest employeeRequest) {
+        Employee employee = findEmployeeById(employeeId);
+        log.info("Retrieved employee details to update employee - {}", employee);
+
+        employee.setFirstname(employeeMapper.extractFirstName(employeeRequest.name()));
+        employee.setSurname(employeeMapper.extractSurName(employeeRequest.name()));
+        employee.setRoleId(employeeRequest.roleId());
+
+        Employee updatedEmployee = employeeRepository.saveAndFlush(employee);
+        log.info("Updated employee details - {}", updatedEmployee);
+
+        return employeeMapper.mapEmployeeToEmployeeResponse(updatedEmployee);
     }
 
-    //TODO: yet to implement
     public String deleteEmployeeById(final Integer employeeId) {
-        return null;
+        employeeRepository.deleteById(employeeId);
+        log.info("Employee(Id: {}) deleted successfully.", employeeId);
+
+        return "Employee deleted successfully";
+    }
+
+    private Employee findEmployeeById(final Integer employeeId) {
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
+        if(employee.isEmpty()) {
+            throw new EmployeeNotFoundException("Employee not found");
+        }
+        return employee.get();
     }
 }
