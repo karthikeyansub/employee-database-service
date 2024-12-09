@@ -1,7 +1,7 @@
 package com.bank.employee.db.operation.service;
 
 import com.bank.employee.db.operation.domain.Role;
-import com.bank.employee.db.operation.domain.dto.RoleDto;
+import com.bank.employee.db.operation.domain.dto.RoleReponse;
 import com.bank.employee.db.operation.repository.RoleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.SmartInitializingSingleton;
@@ -45,27 +45,27 @@ public class RoleCacheService implements SmartInitializingSingleton {
         updateRolesInCache();
     }
 
-    public List<RoleDto> getRoles() {
-        List<RoleDto> roleDtoList = this.cache.get(ROLE_CACHED_LIST, List.class);
-        if(isNull(roleDtoList) || roleDtoList.isEmpty()) {
+    public List<RoleReponse> getRoles() {
+        List<RoleReponse> roleReponseList = this.cache.get(ROLE_CACHED_LIST, List.class);
+        if(isNull(roleReponseList) || roleReponseList.isEmpty()) {
             log.debug("Cache is empty, updating the roles cache list");
             return updateRolesInCache();
         }
-        return roleDtoList;
+        return roleReponseList;
     }
 
-    private List<RoleDto> updateRolesInCache() {
-        List<RoleDto> roleDtoList = Stream.ofNullable(roleRepository.findAll())
+    private List<RoleReponse> updateRolesInCache() {
+        List<RoleReponse> roleReponseList = Stream.ofNullable(roleRepository.findAll())
                 .filter(roles -> !roles.isEmpty())
                 .flatMap(Collection::stream)
                 .map(roleMapperFunction)
                 .toList();
 
-        this.cache.put(ROLE_CACHED_LIST, roleDtoList);
+        this.cache.put(ROLE_CACHED_LIST, roleReponseList);
 
-        return roleDtoList;
+        return roleReponseList;
     }
 
-    private final Function<Role, RoleDto> roleMapperFunction = role ->
-            new RoleDto(role.getId(), role.getName());
+    private final Function<Role, RoleReponse> roleMapperFunction = role ->
+            new RoleReponse(role.getId(), role.getName());
 }

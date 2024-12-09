@@ -1,6 +1,6 @@
 package com.bank.employee.db.operation.api;
 
-import com.bank.employee.db.operation.domain.dto.RoleDto;
+import com.bank.employee.db.operation.domain.dto.RoleReponse;
 import com.bank.employee.db.operation.service.RoleCacheService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,7 +27,7 @@ public class RoleController {
             @ApiResponse(responseCode = "500", description = "System errors", content = @Content)
     })
     @GetMapping("/api/roles")
-    public List<RoleDto> getEmployeeRoles() {
+    public List<RoleReponse> getEmployeeRoles() {
         log.info("Received request to get /api/roles");
 
         return roleCacheService.getRoles();

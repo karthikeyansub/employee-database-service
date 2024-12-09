@@ -10,8 +10,10 @@ import java.util.List;
 @Table(name = "ROLE")
 @Data
 @EqualsAndHashCode
+@Builder
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public final class Role implements Serializable {
 
     @Id
