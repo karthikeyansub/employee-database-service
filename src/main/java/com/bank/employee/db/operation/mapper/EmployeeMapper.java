@@ -17,6 +17,7 @@ public interface EmployeeMapper {
 
     @Mapping(source = "name", target = "firstname", qualifiedByName = "getFirstName")
     @Mapping(source = "name", target = "surname", qualifiedByName = "getSurName")
+    @Mapping(target = "id", ignore = true)
     Employee mapEmployeeRequestToEmployee(final EmployeeRequest employeeRequest);
 
     @Named("getFirstName")

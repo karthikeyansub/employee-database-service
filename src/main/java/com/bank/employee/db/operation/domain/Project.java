@@ -16,8 +16,15 @@ import java.io.Serializable;
 @NoArgsConstructor
 public final class Project implements Serializable {
 
-    @EmbeddedId
-    private ProjectId projectId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "NAME", nullable = false)
+    private String name;
+
+    @Column(name = "EMPLOYEE_ID", nullable = false)
+    private Integer employeeId;
 
     @ManyToOne(targetEntity = Employee.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "ID", insertable = false, updatable = false)

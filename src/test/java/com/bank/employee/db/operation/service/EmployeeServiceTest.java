@@ -12,13 +12,13 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
@@ -29,7 +29,7 @@ class EmployeeServiceTest {
     @Mock
     private EmployeeRepository mockEmployeeRepository;
 
-    @Spy
+    @Mock
     private EmployeeMapper mockEmployeeMapper;
 
     @BeforeEach

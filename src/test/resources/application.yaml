@@ -3,9 +3,9 @@ server.port: 8081
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:employee_database
-    username: admin
-    password: adminpwd
+    url: jdbc:h2:mem:test_database
+    username: testuser
+    password: testuserpwd
 
   jpa:
     show-sql: false
@@ -22,10 +22,6 @@ spring:
     type: caffeine
     cache-names: roleCacheManager
     caffeine:
-      spec: maximumSize=100,expireAfterWrite=1h,recordStats
-
-  h2.console.enabled: true
-
-  mvc.favicon.enabled: false
+      spec: maximumSize=100,expireAfterWrite=600s
 
 logging.level.root: info
