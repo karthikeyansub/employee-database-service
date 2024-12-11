@@ -24,7 +24,7 @@ public class EmployeeService {
 
     public EmployeeResponse getEmployeeById(final int employeeId) {
         Employee employee = findEmployeeById(employeeId);
-        log.info("Retrieved employee details - {}", employee);
+        log.debug("Retrieved employee details - {}", employee);
 
         return employeeMapper.mapEmployeeToEmployeeResponse(employee);
     }
@@ -32,10 +32,10 @@ public class EmployeeService {
     @Transactional
     public EmployeeResponse createEmployee(final EmployeeRequest employeeRequest) {
         Employee employee = employeeMapper.mapEmployeeRequestToEmployee(employeeRequest);
-        log.info("Employee details to be saved - {}", employee);
+        log.debug("Employee details to be saved - {}", employee);
 
         Employee savedEmployee = employeeRepository.saveAndFlush(employee);
-        log.info("Saved employee details - {}", savedEmployee);
+        log.debug("Saved employee details - {}", savedEmployee);
 
         return employeeMapper.mapEmployeeToEmployeeResponse(savedEmployee);
     }
@@ -43,21 +43,24 @@ public class EmployeeService {
     @Transactional
     public EmployeeResponse updateEmployee(final int employeeId, final EmployeeRequest employeeRequest) {
         Employee employee = findEmployeeById(employeeId);
-        log.info("Retrieved employee details to update employee - {}", employee);
+        log.debug("Retrieved employee details to update employee - {}", employee);
 
         employee.setFirstname(employeeMapper.extractFirstName(employeeRequest.name()));
         employee.setSurname(employeeMapper.extractSurName(employeeRequest.name()));
         employee.setRoleId(employeeRequest.roleId());
 
         Employee updatedEmployee = employeeRepository.saveAndFlush(employee);
-        log.info("Updated employee details - {}", updatedEmployee);
+        log.debug("Updated employee details - {}", updatedEmployee);
 
         return employeeMapper.mapEmployeeToEmployeeResponse(updatedEmployee);
     }
 
     public String deleteEmployeeById(final Integer employeeId) {
-        employeeRepository.deleteById(employeeId);
-        log.info("Employee(Id: {}) deleted successfully.", employeeId);
+        Employee employee = findEmployeeById(employeeId);
+        log.debug("Retrieved employee details to delete an employee - {}", employee);
+
+        employeeRepository.delete(employee);
+        log.debug("Employee(Id: {}) deleted successfully.", employeeId);
 
         return "Employee deleted successfully";
     }

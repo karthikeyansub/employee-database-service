@@ -1,5 +1,7 @@
 ## Employee Database Service
 
+It's an internal API which will be accessed with basic authorization.
+
 # Requirement Clarification
 
 * Many to One between Employee to Project, This means an employee can work on many project. And each project is assigned to one employee.
@@ -7,5 +9,13 @@
 
 # TODO:
 
-* Create procedure
+* Create procedure - done
 * Docker
+
+# Run Applicaiton Instruction:
+
+* Start application 
+* Open H2 database console
+* Execute delete_role_store_procedure.sql manually in the database
+
+![img.png](code_coverage.png)

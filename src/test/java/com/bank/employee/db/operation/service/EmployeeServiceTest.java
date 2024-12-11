@@ -87,6 +87,8 @@ class EmployeeServiceTest {
 
         @Test
         void testDeleteEmployeeById_ShouldDeleteEmployeeAndReturnMessage() {
+            when(mockEmployeeRepository.findById(anyInt())).thenReturn(getEmployee());
+
             doNothing().when(mockEmployeeRepository).deleteById(anyInt());
 
             String response = classUnderTest.deleteEmployeeById(1);

@@ -1,5 +1,11 @@
 server.port: 8081
 
+basicauth:
+  config:
+    username: employee_app
+    role: APP_ADMIN
+    password: password
+
 spring:
   datasource:
     driver-class-name: org.h2.Driver

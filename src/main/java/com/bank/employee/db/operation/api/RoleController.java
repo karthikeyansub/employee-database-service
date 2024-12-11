@@ -27,7 +27,7 @@ public class RoleController {
             @ApiResponse(responseCode = "500", description = "System errors", content = @Content)
     })
     @GetMapping("/api/roles")
-    public List<RoleReponse> getEmployeeRoles() {
+    public List<RoleReponse> getRoles() {
         log.info("Received request to get /api/roles");
 
         return roleCacheService.getRoles();

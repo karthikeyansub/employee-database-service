@@ -11,8 +11,10 @@ import org.mapstruct.Named;
 public interface EmployeeMapper {
 
     @Mapping(target = "name", expression = """
-            java(employee.getFirstname() + " " + employee.getSurname())
-        """)
+            java(
+                (null == employee.getSurname() || "".equals(employee.getSurname()))
+                    ? employee.getFirstname() : employee.getFirstname() + " " + employee.getSurname())
+            """)
     EmployeeResponse mapEmployeeToEmployeeResponse(final Employee employee);
 
     @Mapping(source = "name", target = "firstname", qualifiedByName = "getFirstName")
@@ -27,6 +29,6 @@ public interface EmployeeMapper {
 
     @Named("getSurName")
     default String extractSurName(String name) {
-        return name != null && name.split(" ").length > 0 ? name.split(" ")[1] : null;
+        return name != null && name.split(" ").length > 1 ? name.split(" ")[1] : null;
     }
 }

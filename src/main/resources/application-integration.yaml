@@ -1,7 +1,12 @@
-server.port: 8081
+basicauth:
+  config:
+    - username: employee_app
+      role: APP_ADMIN
+      password: password
 
 spring:
   datasource:
+    platform: integration-test
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:test_database
     username: testuser
