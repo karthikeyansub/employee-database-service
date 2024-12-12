@@ -30,17 +30,17 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChainForTest(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(requests -> requests
-                    .requestMatchers(antMatcher(HttpMethod.GET, "/api/employees/**")).hasRole(APP_ADMIN)
-                    .requestMatchers(antMatcher(HttpMethod.POST, "/api/employees")).hasRole(APP_ADMIN)
-                    .requestMatchers(antMatcher(HttpMethod.PUT, "/api/employees/**")).hasRole(APP_ADMIN)
-                    .requestMatchers(antMatcher(HttpMethod.DELETE, "/api/employees/**")).hasRole(APP_ADMIN)
-                        .requestMatchers(antMatcher(HttpMethod.GET, "/api/roles/**")).hasRole(APP_ADMIN)
-                    .requestMatchers(antMatcher("/swagger-ui/**")).permitAll()
                         .requestMatchers(antMatcher("/h2-console/**")).permitAll()
-                    .requestMatchers(antMatcher("/v3/api-docs/**")).permitAll()
-                    .requestMatchers(antMatcher(HttpMethod.GET, "/actuator/**")).permitAll()
-                    .requestMatchers(antMatcher(HttpMethod.OPTIONS, "/**")).permitAll()
-                    .anyRequest().denyAll())
+                        .requestMatchers(antMatcher("/swagger-ui/**")).permitAll()
+                        .requestMatchers(antMatcher("/v3/api-docs/**")).permitAll()
+                        .requestMatchers(antMatcher(HttpMethod.GET, "/api/employees/**")).hasRole(APP_ADMIN)
+                        .requestMatchers(antMatcher(HttpMethod.POST, "/api/employees")).hasRole(APP_ADMIN)
+                        .requestMatchers(antMatcher(HttpMethod.PUT, "/api/employees/**")).hasRole(APP_ADMIN)
+                        .requestMatchers(antMatcher(HttpMethod.DELETE, "/api/employees/**")).hasRole(APP_ADMIN)
+                        .requestMatchers(antMatcher(HttpMethod.GET, "/api/roles/**")).hasRole(APP_ADMIN)
+                        .requestMatchers(antMatcher(HttpMethod.GET, "/actuator/**")).permitAll()
+                        .requestMatchers(antMatcher(HttpMethod.OPTIONS, "/**")).permitAll()
+                        .anyRequest().denyAll())
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(httpSecurityHttpBasicConfigurer ->
                         httpSecurityHttpBasicConfigurer.realmName("Basic"))
