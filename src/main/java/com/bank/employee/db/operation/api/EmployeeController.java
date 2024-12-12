@@ -1,5 +1,6 @@
 package com.bank.employee.db.operation.api;
 
+import com.bank.employee.db.operation.domain.dto.ApiSuccessResponse;
 import com.bank.employee.db.operation.domain.dto.EmployeeRequest;
 import com.bank.employee.db.operation.domain.dto.EmployeeResponse;
 import com.bank.employee.db.operation.service.EmployeeService;
@@ -77,7 +78,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "500", description = "System errors", content = @Content)
     })
     @DeleteMapping("/{id}")
-    public String deleteEmployee(
+    public ApiSuccessResponse deleteEmployee(
             @Parameter(name = "id", description = "Employee Id") @PathVariable("id") final Integer employeeId) {
         log.info("Received request to delete /employees/{}", employeeId);
 

@@ -1,6 +1,7 @@
 package com.bank.employee.db.operation.service;
 
 import com.bank.employee.db.operation.domain.Employee;
+import com.bank.employee.db.operation.domain.dto.ApiSuccessResponse;
 import com.bank.employee.db.operation.domain.dto.EmployeeRequest;
 import com.bank.employee.db.operation.domain.dto.EmployeeResponse;
 import com.bank.employee.db.operation.exception.ResourceNotFoundException;
@@ -91,9 +92,9 @@ class EmployeeServiceTest {
 
             doNothing().when(mockEmployeeRepository).deleteById(anyInt());
 
-            String response = classUnderTest.deleteEmployeeById(1);
+            ApiSuccessResponse response = classUnderTest.deleteEmployeeById(1);
 
-            assertEquals("Employee deleted successfully", response);
+            assertEquals("Employee deleted successfully", response.message());
         }
     }
 

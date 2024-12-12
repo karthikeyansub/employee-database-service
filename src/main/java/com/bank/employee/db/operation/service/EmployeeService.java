@@ -1,6 +1,7 @@
 package com.bank.employee.db.operation.service;
 
 import com.bank.employee.db.operation.domain.Employee;
+import com.bank.employee.db.operation.domain.dto.ApiSuccessResponse;
 import com.bank.employee.db.operation.domain.dto.EmployeeRequest;
 import com.bank.employee.db.operation.domain.dto.EmployeeResponse;
 import com.bank.employee.db.operation.exception.ResourceNotFoundException;
@@ -55,14 +56,14 @@ public class EmployeeService {
         return employeeMapper.mapEmployeeToEmployeeResponse(updatedEmployee);
     }
 
-    public String deleteEmployeeById(final Integer employeeId) {
+    public ApiSuccessResponse deleteEmployeeById(final Integer employeeId) {
         Employee employee = findEmployeeById(employeeId);
         log.debug("Retrieved employee details to delete an employee - {}", employee);
 
         employeeRepository.delete(employee);
         log.debug("Employee(Id: {}) deleted successfully.", employeeId);
 
-        return "Employee deleted successfully";
+        return new ApiSuccessResponse("Employee deleted successfully");
     }
 
     private Employee findEmployeeById(final Integer employeeId) {

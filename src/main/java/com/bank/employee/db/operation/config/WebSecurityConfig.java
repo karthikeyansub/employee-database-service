@@ -36,6 +36,7 @@ public class WebSecurityConfig {
                     .requestMatchers(antMatcher(HttpMethod.DELETE, "/api/employees/**")).hasRole(APP_ADMIN)
                         .requestMatchers(antMatcher(HttpMethod.GET, "/api/roles/**")).hasRole(APP_ADMIN)
                     .requestMatchers(antMatcher("/swagger-ui/**")).permitAll()
+                        .requestMatchers(antMatcher("/h2-console/**")).permitAll()
                     .requestMatchers(antMatcher("/v3/api-docs/**")).permitAll()
                     .requestMatchers(antMatcher(HttpMethod.GET, "/actuator/**")).permitAll()
                     .requestMatchers(antMatcher(HttpMethod.OPTIONS, "/**")).permitAll()

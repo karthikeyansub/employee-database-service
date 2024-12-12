@@ -1,5 +1,6 @@
 package com.bank.employee.db.operation.api;
 
+import com.bank.employee.db.operation.domain.dto.ApiSuccessResponse;
 import com.bank.employee.db.operation.domain.dto.EmployeeRequest;
 import com.bank.employee.db.operation.domain.dto.EmployeeResponse;
 import com.bank.employee.db.operation.domain.dto.ApiErrorResponse;
@@ -122,6 +123,10 @@ class EmployeeControllerIT {
                     .andExpect(status().is2xxSuccessful())
                     .andExpect(content().string("Employee deleted successfully"))
                     .andReturn();
+
+            String responseJson = result.getResponse().getContentAsString();
+            ApiSuccessResponse response = objectMapper.readValue(responseJson, ApiSuccessResponse.class);
+            assertEquals("Employee deleted successfully", response.message());
         }
     }
 
