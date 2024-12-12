@@ -10,6 +10,13 @@ It's an internal API which will be accessed with basic authorization (Credential
 ### Run application
     - Use 'java -jar .\employee-database-service-0.0.1.jar' from the jar file location.
 
+### Run application using docker
+
+#### Build
+    - docker build -t eds_app_image .
+#### Run
+    - docker run -d -p 8089:8081 eds-app-image
+
 ### H2 Database console
     - Use this link to access H2 database - http://localhost:8081/h2-console/. (Credential `admin:adminpwd`)
 
