@@ -35,14 +35,25 @@ class RoleControllerIT {
     @DisplayName("GET:/api/roles - API will return the 200 response with all roles in response")
     void testGetRoles_WillReturnAllRoles() throws Exception {
 
-        MvcResult result = mockMvc.perform(get("/api/roles")
+        MvcResult result = mockMvc.perform(get("/api/roles/ADMIN")
                         .header(HttpHeaders.AUTHORIZATION, EmployeeTestUtils.basicAuthHeaderValue()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is2xxSuccessful())
                 .andReturn();
 
         String responseJson = result.getResponse().getContentAsString();
-        List<RoleReponse> response = objectMapper.readValue(responseJson, List.class);
-        assertEquals(3, response.size());
+        RoleReponse response = objectMapper.readValue(responseJson, RoleReponse.class);
+        assertEquals("ADMIN", response.name());
+    }
+
+    @Test
+    @DisplayName("GET:/api/roles - API will return the 404 response if role name not found")
+    void testGetRoles_WillReturnNotFound() throws Exception {
+
+        mockMvc.perform(get("/api/roles/WRONG_ROLE")
+                        .header(HttpHeaders.AUTHORIZATION, EmployeeTestUtils.basicAuthHeaderValue()))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isNotFound())
+                .andReturn();
     }
 }

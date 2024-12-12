@@ -3,7 +3,7 @@ package com.bank.employee.db.operation.service;
 import com.bank.employee.db.operation.domain.Employee;
 import com.bank.employee.db.operation.domain.dto.EmployeeRequest;
 import com.bank.employee.db.operation.domain.dto.EmployeeResponse;
-import com.bank.employee.db.operation.exception.EmployeeNotFoundException;
+import com.bank.employee.db.operation.exception.ResourceNotFoundException;
 import com.bank.employee.db.operation.mapper.EmployeeMapper;
 import com.bank.employee.db.operation.repository.EmployeeRepository;
 import jakarta.transaction.Transactional;
@@ -68,7 +68,7 @@ public class EmployeeService {
     private Employee findEmployeeById(final Integer employeeId) {
         Optional<Employee> employee = employeeRepository.findById(employeeId);
         if(employee.isEmpty()) {
-            throw new EmployeeNotFoundException("Employee not found");
+            throw new ResourceNotFoundException("Employee not found");
         }
         return employee.get();
     }

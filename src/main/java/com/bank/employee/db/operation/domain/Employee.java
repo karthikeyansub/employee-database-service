@@ -23,7 +23,7 @@ public final class Employee implements Serializable {
     @Column(name = "FIRSTNAME", nullable = false)
     private String firstname;
 
-    @Column(name = "SURNAME")
+    @Column(name = "SURNAME", nullable = false)
     private String surname;
 
     @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID", nullable = false)

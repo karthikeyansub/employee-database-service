@@ -20,8 +20,8 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Slf4j
 public class ApiExceptionHandler {
 
-    @ExceptionHandler(EmployeeNotFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleNotFoundException(final EmployeeNotFoundException exception) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleNotFoundException(final ResourceNotFoundException exception) {
         log.error("Resource not found exception - {}, stack trace: {}", exception.getMessage(), getStackTrace(exception));
         return ResponseEntity.status(NOT_FOUND).body(new ApiErrorResponse(NOT_FOUND.name(), exception.getMessage(), null));
     }

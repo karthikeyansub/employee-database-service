@@ -11,9 +11,7 @@ import org.mapstruct.Named;
 public interface EmployeeMapper {
 
     @Mapping(target = "name", expression = """
-            java(
-                (null == employee.getSurname() || "".equals(employee.getSurname()))
-                    ? employee.getFirstname() : employee.getFirstname() + " " + employee.getSurname())
+            java(employee.getFirstname() + " " + employee.getSurname())
             """)
     EmployeeResponse mapEmployeeToEmployeeResponse(final Employee employee);
 

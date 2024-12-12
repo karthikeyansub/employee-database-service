@@ -3,7 +3,7 @@ package com.bank.employee.db.operation.service;
 import com.bank.employee.db.operation.domain.Employee;
 import com.bank.employee.db.operation.domain.dto.EmployeeRequest;
 import com.bank.employee.db.operation.domain.dto.EmployeeResponse;
-import com.bank.employee.db.operation.exception.EmployeeNotFoundException;
+import com.bank.employee.db.operation.exception.ResourceNotFoundException;
 import com.bank.employee.db.operation.mapper.EmployeeMapper;
 import com.bank.employee.db.operation.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -105,14 +105,14 @@ class EmployeeServiceTest {
         void testGetEmployeeById_ShouldThrowEmployeeNotFoundException() {
             when(mockEmployeeRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-            assertThrows(EmployeeNotFoundException.class, () -> classUnderTest.getEmployeeById(10));
+            assertThrows(ResourceNotFoundException.class, () -> classUnderTest.getEmployeeById(10));
         }
 
         @Test
         void testUpdateEmployee_ShouldThrowEmployeeNotFoundException() {
             when(mockEmployeeRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-            assertThrows(EmployeeNotFoundException.class, () -> classUnderTest.updateEmployee(10, getEmployeeRequestForUpdate()));
+            assertThrows(ResourceNotFoundException.class, () -> classUnderTest.updateEmployee(10, getEmployeeRequestForUpdate()));
 
             verify(mockEmployeeRepository, times(0)).saveAndFlush(getEmployee().get());
         }

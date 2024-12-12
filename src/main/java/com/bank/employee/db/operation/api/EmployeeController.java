@@ -33,7 +33,7 @@ public class EmployeeController {
     })
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public EmployeeResponse getEmployeeById(
-            @Parameter(name = "id", description = "Employee Id") @PathVariable("id") final int employeeId) {
+            @Parameter(name = "id", description = "Employee Id") @PathVariable("id") final Integer employeeId) {
         log.info("Received request to get /employees/{}", employeeId);
 
         return employeeService.getEmployeeById(employeeId);
@@ -62,7 +62,7 @@ public class EmployeeController {
     })
     @PutMapping("/{id}")
     public EmployeeResponse updateEmployee(
-            @Parameter(name = "id", description = "Employee Id") @PathVariable("id") final int employeeId,
+            @Parameter(name = "id", description = "Employee Id") @PathVariable("id") final Integer employeeId,
             @Valid @RequestBody final EmployeeRequest employeeRequest) {
         log.info("Received request to update /employees/{}", employeeId);
 
@@ -78,7 +78,7 @@ public class EmployeeController {
     })
     @DeleteMapping("/{id}")
     public String deleteEmployee(
-            @Parameter(name = "id", description = "Employee Id") @PathVariable("id") final int employeeId) {
+            @Parameter(name = "id", description = "Employee Id") @PathVariable("id") final Integer employeeId) {
         log.info("Received request to delete /employees/{}", employeeId);
 
         return employeeService.deleteEmployeeById(employeeId);
